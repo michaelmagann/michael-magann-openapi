@@ -31,7 +31,10 @@ function getWeatherDescription(code) {
         81: "Moderate rain showers",
         82: "Violent rain showers",
         85: "Slight snow showers",
-        86: "Heavy snow showers"
+        86: "Heavy snow showers",
+        95: "Thunderstorm",
+        96: "Thunderstorm with slight hail",
+        99: "Thunderstorm with heavy hail"
     };
     return descriptions[code] || "Unknown";
 }
@@ -67,10 +70,10 @@ async function displayWeather() {
                 const absDiff = Math.abs(diff).toFixed(1);
 
                 differenceHTML = diff > 0
-                    ? `<p style="color: green;">+${absDiff}°F warmer than Worcester</p>`
-                    : diff < 0
-                        ? `<p style="color: blue;">-${absDiff}°F colder than Worcester</p>`
-                        : `<p>Same temperature as Worcester</p>`;
+                    ? `<p class="warm">+${absDiff}°F warmer than Worcester</p>`
+                    :diff < 0
+                    ? `<p class="cold">${absDiff}°F colder than Worcester</p>`
+                    : `<p class="same">Same temperature as Worcester</p>`;
             }
 
             card.innerHTML = `
@@ -80,7 +83,7 @@ async function displayWeather() {
                 ${differenceHTML}
             `;
 
-            if (index === 0) card.style.border = "3px solid black";
+            if (index === 0) card.classList.add("home-city");
             container.appendChild(card);
         });
 
